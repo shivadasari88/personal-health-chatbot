@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Assistance Chatbot</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .conversation {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .user-message {
+            background-color: #e9ecef;
+            text-align: left;
+        }
+        .assistant-message {
+            background-color: #007bff;
+            color: #fff;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h1>Medical Assistance Chatbot</h1>
+            </div>
+            <div class="card-body">
+                <form method="post" class="mb-4">
+                    <div class="form-group">
+                        <label for="symptom">Select your symptom:</label>
+                        <select class="form-control" id="symptom" name="symptom">
+                            {% for symptom in symptoms %}
+                                <option value="{{ symptom }}">{{ symptom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Next</button>
+                </form>
+
+                <h2>Conversation</h2>
+                <div class="conversation border p-3 mb-4" id="conversation">
+                    {% for message in convo %}
+                        <div class="message {% if message.role == 'user' %}user-message{% else %}assistant-message{% endif %}">
+                            <strong>{{ message.role | capitalize }}:</strong> {{ message.content }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if user_input %}
+                <h2>Latest Interaction</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>User:</strong> {{ user_input }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var socket = io();
+
+        socket.on('new_message', function(data) {
+            var conversation = document.getElementById('conversation');
+            var messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + (data.role == 'user' ? 'user-message' : 'assistant-message');
+            messageDiv.innerHTML = '<strong>' + data.role.charAt(0).toUpperCase() + data.role.slice(1) + ':</strong> ' + data.content;
+            conversation.appendChild(messageDiv);
+            conversation.scrollTop = conversation.scrollHeight;
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
