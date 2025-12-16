@@ -1,1 +1,25 @@
-COMPREHENSIVE PERSONAL HEALTH ADVISORY SYSTEM Chatbot
+
+# Comprehensive Health Advisory Systems
+
+Comprehensive Health Advisory Systems are innovative platforms designed to provide personalized healthcare recommendations and symptom analysis. These systems integrate cutting-edge technologies such as Machine Learning (ML) and Large Language Models (LLMs) to enhance the accuracy and relevance of the advice provided.
+
+
+## Screenshots
+
+![1](https://github.com/shivadasari88/personal-health-chatbot/blob/6085170d2cc7f63bc23bc6836667c7cdf9f4e067/Screenshot%202025-12-16%20221946.png)
+
+
+![2](https://github.com/shivadasari88/personal-health-chatbot/blob/6085170d2cc7f63bc23bc6836667c7cdf9f4e067/Screenshot%202025-12-16%20222019.png)
+
+
+## Tech stack
+
+```bash
+  
+Flask
+Ollama
+Render_template
+Request 
+
+```
+
